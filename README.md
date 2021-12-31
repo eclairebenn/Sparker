@@ -1,6 +1,6 @@
 This application utilizes the PERN Stack - PostgreSQL, Express, Node, and React with TypeScript. This app's API is created with Sequelize ORM.
 
-# Sparker - Innovation sparks here.
+# Sparker
 
 ## Get Started
 
