@@ -24,7 +24,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
     active!: boolean;
 
     static associate(models: any) {
-      // define association here
+      //define association here
       Project.belongsToMany(models.User, {
         through: "ProjectBackings",
       });

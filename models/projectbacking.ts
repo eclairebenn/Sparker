@@ -3,6 +3,7 @@ import { Model } from "sequelize";
 
 // These are all the attributes in the ProjectBacking model
 interface ProjectBackingAttributes {
+  id: number;
   ProjectId: number;
   UserId: string;
   amount: number;
@@ -17,7 +18,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-
+    id!: number;
     ProjectId!: number;
     UserId!: string;
     amount!: number;
@@ -28,10 +29,15 @@ module.exports = (sequelize: any, DataTypes: any) => {
   }
   ProjectBacking.init(
     {
-      ProjectId: {
+      id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
+        autoIncrement: true,
+      },
+      ProjectId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
         references: {
           model: "Projects",
           key: "id",
@@ -40,7 +46,6 @@ module.exports = (sequelize: any, DataTypes: any) => {
       UserId: {
         type: DataTypes.UUID,
         allowNull: false,
-        primaryKey: true,
         references: {
           model: "Users",
           key: "id",

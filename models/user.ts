@@ -23,7 +23,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
     email!: string;
     password!: string;
     static associate(models: any) {
-      // define association here
+      //define association here
       User.belongsToMany(models.Project, {
         through: "ProjectBackings",
       });
