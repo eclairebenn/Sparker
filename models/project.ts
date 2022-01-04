@@ -1,5 +1,5 @@
 "use strict";
-import { Model } from "sequelize";
+import { Model, Optional } from "sequelize";
 
 // These are all the attributes in the Project model
 interface ProjectAttributes {
@@ -11,8 +11,15 @@ interface ProjectAttributes {
   // funds: number;
 }
 
+export interface ProjectCreationAttributes
+  extends Optional<ProjectAttributes, "id"> {}
+export interface ProjectOutput extends Required<ProjectAttributes> {}
+
 module.exports = (sequelize: any, DataTypes: any) => {
-  class Project extends Model<ProjectAttributes> implements ProjectAttributes {
+  class Project
+    extends Model<ProjectAttributes, ProjectCreationAttributes>
+    implements ProjectAttributes
+  {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
