@@ -3,10 +3,14 @@ import db from "../models";
 import { Request, Response } from "express";
 
 export const findAll = async (req: Request, res: Response, next: any) => {
+  const filter = req.query;
   try {
     const projects = await db.Project.findAll({
       include: {
-        model: db.User,
+        model: db.Category,
+      },
+      where: {
+        filter,
       },
     });
     return res.status(200).json(projects);

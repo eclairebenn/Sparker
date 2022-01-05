@@ -13,11 +13,6 @@ module.exports = (sequelize: any, DataTypes: any) => {
     extends Model<ProjectBackingAttributes>
     implements ProjectBackingAttributes
   {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     id!: number;
     ProjectId!: number;
     UserId!: string;

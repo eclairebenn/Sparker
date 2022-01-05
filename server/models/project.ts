@@ -6,9 +6,11 @@ interface ProjectAttributes {
   id: number;
   title: string;
   active: boolean;
-  // funded: boolean;
-  // goal: number;
-  // funds: number;
+  goal: number;
+  funds: number;
+  description: string;
+  img_url: string;
+  category: string;
 }
 
 export interface ProjectCreationAttributes
@@ -20,20 +22,22 @@ module.exports = (sequelize: any, DataTypes: any) => {
     extends Model<ProjectAttributes, ProjectCreationAttributes>
     implements ProjectAttributes
   {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-
     id!: number;
     title!: string;
     active!: boolean;
+    goal!: number;
+    funds!: number;
+    description!: string;
+    img_url!: string;
+    category!: string;
 
     static associate(models: any) {
       //define association here
       Project.belongsToMany(models.User, {
         through: "ProjectBackings",
+      });
+      Project.belongsTo(models.User, {
+        foreignKey: "CreatorId",
       });
     }
   }
@@ -49,8 +53,28 @@ module.exports = (sequelize: any, DataTypes: any) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      category: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      description: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      img_url: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
       active: {
         type: DataTypes.BOOLEAN,
+        allowNull: false,
+      },
+      goal: {
+        type: DataTypes.DECIMAL,
+        allowNull: false,
+      },
+      funds: {
+        type: DataTypes.DECIMAL,
         allowNull: false,
       },
     },

@@ -32,9 +32,10 @@ module.exports = (sequelize: any, DataTypes: any) => {
 
     static associate(models: any) {
       //define association here
-      // User.belongsToMany(models.Project, {
-      //   through: "ProjectBackings",
-      // });
+      User.belongsToMany(models.Project, {
+        through: "ProjectBackings",
+      });
+      User.hasMany(models.Project);
     }
   }
   User.init(

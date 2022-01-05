@@ -31,7 +31,7 @@ const createProjectBackings = () => {
   });
 };
 
-//createProjectBackings();
+createProjectBackings();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
