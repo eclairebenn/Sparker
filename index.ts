@@ -2,11 +2,11 @@ import express from "express";
 import cors from "cors";
 import * as bodyParser from "body-parser";
 
-import projectRoutes from "./routes/project.routes";
+import projectRoutes from "./server/routes/project.routes";
 const app = express();
 const port = process.env.PORT || 3000;
 
-import db from "./models";
+import db from "./server/models";
 // import { projectbackings } from "./seeders/projectbackings";
 // import { projects } from "./seeders/projects";
 // import { users } from "./seeders/users";
