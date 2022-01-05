@@ -13,7 +13,8 @@ router.use("/projects", projectRoutes);
 router.use("/users", userRouter);
 
 const app = express();
-const port = process.env.PORT || 3000;
+app.use(cors());
+const port = process.env.PORT || 8000;
 //Seed Functions
 const createUsers = () => {
   users.map((user) => {

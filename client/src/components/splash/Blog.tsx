@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
@@ -7,8 +7,8 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MainFeaturedPost from "./MainFeaturedPost";
-import FeaturedPost from "./FeaturedPost";
 import Sidebar from "./Sidebar";
+import axios from "axios";
 
 const mainFeaturedPost = {
   title: "Title of a longer featured blog post",
@@ -18,41 +18,6 @@ const mainFeaturedPost = {
   imageText: "main image description",
   linkText: "Continue reading…",
 };
-
-const featuredPosts = [
-  {
-    title: "Featured post",
-    date: "Nov 12",
-    description:
-      "This is a wider card with supporting text below as a natural lead-in to additional content.",
-    image: "https://source.unsplash.com/random",
-    imageLabel: "Image Text",
-  },
-  {
-    title: "Post title",
-    date: "Nov 11",
-    description:
-      "This is a wider card with supporting text below as a natural lead-in to additional content.",
-    image: "https://source.unsplash.com/random",
-    imageLabel: "Image Text",
-  },
-  {
-    title: "Post title",
-    date: "Nov 11",
-    description:
-      "This is a wider card with supporting text below as a natural lead-in to additional content.",
-    image: "https://source.unsplash.com/random",
-    imageLabel: "Image Text",
-  },
-  {
-    title: "Post title",
-    date: "Nov 11",
-    description:
-      "This is a wider card with supporting text below as a natural lead-in to additional content.",
-    image: "https://source.unsplash.com/random",
-    imageLabel: "Image Text",
-  },
-];
 
 const sidebar = {
   title: "About",
@@ -81,6 +46,28 @@ const sidebar = {
 const theme = createTheme();
 
 export default function Blog() {
+  const [projects, setProjects] = useState([
+    {
+      id: 0,
+      title: "",
+      active: false,
+      goal: 0,
+      funds: 0,
+      description: "",
+      img_url: "",
+      category: "",
+    },
+  ]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/projects")
+      .then((res) => {
+        setProjects(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -88,8 +75,12 @@ export default function Blog() {
         <main>
           <MainFeaturedPost post={mainFeaturedPost} />
           <Grid container spacing={2}>
-            {featuredPosts.map((post) => (
-              <FeaturedPost key={post.title} post={post} />
+            {projects.map((project) => (
+              <div>
+                <h1>{project.title}</h1>
+                <h3>{project.category}</h3>
+                <h3>{project.description}</h3>
+              </div>
             ))}
           </Grid>
           <Grid container spacing={5} sx={{ mt: 3 }}>

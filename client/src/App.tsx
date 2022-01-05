@@ -8,21 +8,15 @@ import Footer from "./components/common/Footer";
 import Blog from "./components/splash/Blog";
 import SignIn from "./components/user/SignIn";
 import SignUp from "./components/user/SignUp";
-const App: FC<any> = (): ReactElement => {
-  // const classes = useStyles();
-  // const [data, setData] = useState([]);
-  // useEffect(() => {
-  //   fetch("https://finalspaceapi.com/api/v0/character/?limit=12")
-  //     .then((res) => res.json())
-  //     .then((data) => setData(data));
-  // }, []);
+import ProjectPage from "./components/projects/projectPage";
+import Checkout from "./components/checkout/Checkout";
+import CheckoutForm from "./components/checkout/CheckoutForm";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
-  // interface characterAttr {
-  //   name: string;
-  //   species: string;
-  //   img_url: string;
-  //   status: string;
-  // }
+const stripePromise = loadStripe("pk_test_3KRw1ytAKSdp7LbuctfPm9xb");
+
+const App: FC<any> = (): ReactElement => {
   const sections = [
     { title: "Technology", url: "#" },
     { title: "Art and Design", url: "#" },
@@ -35,23 +29,34 @@ const App: FC<any> = (): ReactElement => {
     { title: "Fashion", url: "#" },
     { title: "Travel", url: "#" },
   ];
+  const options = {
+    clientSecret: "{{CLIENT_SECRET}}",
+  };
   return (
     <BrowserRouter>
       <div className="App">
         <Container>
           <NavBar sections={sections}></NavBar>
           <Routes>
-            <Route path="/project/:title"></Route>
+            <Route path="/project/:title">
+              <ProjectPage></ProjectPage>
+            </Route>
             <Route path="/signin">
               <SignIn></SignIn>
             </Route>
             <Route path="/signup">
               <SignUp></SignUp>
             </Route>
+            <Route path="/checkout">
+              <Checkout></Checkout>
+            </Route>
             <Route path="/">
               <Blog></Blog>
             </Route>
           </Routes>
+          <Elements stripe={stripePromise} options={options}>
+            <CheckoutForm></CheckoutForm>
+          </Elements>
           <Footer
             title="Sparker"
             description="Let us know how we are doing!"
