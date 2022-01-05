@@ -1,5 +1,8 @@
 import express from "express";
-import routes from "./routes";
+import cors from "cors";
+import * as bodyParser from "body-parser";
+
+import projectRoutes from "./routes/project.routes";
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -26,22 +29,16 @@ import db from "./models";
 // };
 
 // createProjectBackings();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
+
+app.use("/projects", projectRoutes);
 
 app.get("/users", (req, res) => {
   db.User.findAll({
     include: {
       model: db.Project,
-    },
-  })
-    .then((result: object) => res.json(result))
-    .catch((err: object) => console.error(err));
-});
-app.get("/projects", (req, res) => {
-  db.Project.findAll({
-    include: {
-      model: db.User,
     },
   })
     .then((result: object) => res.json(result))
@@ -53,4 +50,3 @@ db.sequelize.sync().then(() => {
     console.log(`App listening on port ${port}`);
   });
 });
-app.use("/api/v1", routes);

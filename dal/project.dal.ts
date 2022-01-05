@@ -12,6 +12,10 @@ export const create = async (
 };
 
 export const findAll = async (): Promise<ProjectOutput[]> => {
-  const projects = await Project.findAll();
+  const projects = await Project.findAll({
+    include: {
+      model: db.User,
+    },
+  });
   return projects;
 };
