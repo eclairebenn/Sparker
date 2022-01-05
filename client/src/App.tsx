@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 
 import useStyles from "./styles";
+import NavBar from "./components/common/NavBar";
 
 const App: FC<any> = (): ReactElement => {
   const classes = useStyles();
@@ -27,6 +28,7 @@ const App: FC<any> = (): ReactElement => {
   return (
     <div className="App">
       <Container>
+        <NavBar></NavBar>
         <Typography
           color="textPrimary"
           gutterBottom
