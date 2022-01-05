@@ -1,15 +1,21 @@
 This application utilizes the PERN Stack - PostgreSQL, Express, Node, and React with TypeScript. This app's API is created with Sequelize ORM.
 
-# Sparker
+# Sparker: Get Started
 
-## Get Started
 
 To get started with this example, clone the repository and install the
 dependencies.
 
 ```bash
-$ git clone ...
+$ git clone https://github.com/eclairebenn/Sparker.git
 $ cd sparker
+$ npm install
+```
+
+In another terminal:
+
+```bash
+$ cd sparker/client
 $ npm install
 ```
 
@@ -19,6 +25,20 @@ DB_HOST=localhost
 DB_USER=postgres
 DB_PASS=password
 ```
+Edit client to include your own Stripe secret keys.
+
+Get your database server up and running.
+
+  - sparker/
+```bash
+$ npm run dev
+```
+
+  - sparker/client
+```bash
+$ npm start
+```
+Sequelize will create the tables if they are not already created in your postgresql db.
 
 ## Entity Relationship Diagram:
 <img width="765" alt="SparkerDiagram" src="https://user-images.githubusercontent.com/36554841/148226025-cafecd0b-b9a9-4279-8d4e-6e79987f03eb.png">
@@ -315,3 +335,95 @@ DB_PASS=password
     }
   );
 ```
+
+[`client/src/components/splash.tsx`]()
+```ts
+const theme = createTheme();
+
+export default function Blog() {
+  const [projects, setProjects] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/projects")
+      .then((res) => {
+        setProjects(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Container maxWidth="xl" sx={{ mt: 2 }}>
+        <main>
+          <MainFeaturedPost post={mainFeaturedPost} />
+          <Grid container spacing={2}>
+            {projects.map((project) => (
+              <div>
+                <h1>{project.title}</h1>
+                <h3>{project.category}</h3>
+                <h3>{project.description}</h3>
+              </div>
+            ))}
+          </Grid>
+          <Grid container spacing={5} sx={{ mt: 3 }}>
+            <Sidebar
+              title={sidebar.title}
+              description={sidebar.description}
+              archives={sidebar.archives}
+              social={sidebar.social}
+            />
+          </Grid>
+        </main>
+      </Container>
+    </ThemeProvider>
+  );
+}
+```
+[`client/src/App.tsx`]()
+```ts
+const stripePromise = loadStripe("pk_test_testtesttest");
+
+const App: FC<any> = (): ReactElement => {
+  const options = {
+    clientSecret: "{{CLIENT_SECRET}}",
+  };
+  return (
+    <BrowserRouter>
+      <div className="App">
+        <Container>
+          <NavBar sections={sections}></NavBar>
+          <Routes>
+            <Route path="/project/:title">
+              <ProjectPage></ProjectPage>
+            </Route>
+            <Route path="/signin">
+              <SignIn></SignIn>
+            </Route>
+            <Route path="/signup">
+              <SignUp></SignUp>
+            </Route>
+            <Route path="/">
+              <Blog></Blog>
+            </Route>
+          </Routes>
+          <Elements stripe={stripePromise} options={options}>
+            <CheckoutForm></CheckoutForm>
+          </Elements>
+          <Footer
+            title="Sparker"
+            description="Let us know how we are doing!"
+          ></Footer>
+        </Container>
+      </div>
+    </BrowserRouter>
+  );
+};
+```
+
+## Splash Page:
+<img width="1228" alt="Screenshot 2022-01-05 084654" src="https://user-images.githubusercontent.com/36554841/148256179-dd151526-f67f-4fb3-a7d4-cb8178c593c6.png">
+<img width="819" alt="Screenshot 2022-01-05 084815" src="https://user-images.githubusercontent.com/36554841/148256213-57d74a19-3263-41c2-8984-5c12bb9442ea.png">
+<img width="585" alt="Screenshot 2022-01-05 084841" src="https://user-images.githubusercontent.com/36554841/148256229-762ad464-6314-4c2f-804b-5de5b5ac9bab.png">
+
