@@ -9,7 +9,7 @@ import IconButton from "@mui/material/IconButton";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 
-function Project() {
+export function Project() {
   return (
     <Card>
       <CardHeader
@@ -45,7 +45,7 @@ function Project() {
   );
 }
 
-export default function ProjectList() {
+export function ProjectList() {
   return (
     <Grid container spacing={8}>
       <Grid item xs={12} sm={6} md={4}>

@@ -13,7 +13,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Link from "@mui/material/Link";
 
-const pages = ["Products", "Pricing", "Blog"];
+const pages = ["Trending", "Categories", "Create a Project"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const NavBar = (props) => {
@@ -46,7 +46,7 @@ const NavBar = (props) => {
             component="div"
             sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
           >
-            LOGO
+            SPARKER
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -138,7 +138,11 @@ const NavBar = (props) => {
         <Toolbar
           component="nav"
           variant="dense"
-          sx={{ justifyContent: "space-between", overflowX: "auto" }}
+          sx={{
+            justifyContent: "space-between",
+            display: { xs: "none", md: "block", lg: "block", xl: "block" },
+            alignItems: "center",
+          }}
         >
           {sections.map((section) => (
             <Link
@@ -147,7 +151,7 @@ const NavBar = (props) => {
               key={section.title}
               variant="body2"
               href={section.url}
-              sx={{ p: 1, flexShrink: 0 }}
+              sx={{ p: 1, flexGrow: 1 }}
             >
               {section.title}
             </Link>

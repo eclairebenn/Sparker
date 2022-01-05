@@ -6,25 +6,9 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-//import Header from "./Header";
 import MainFeaturedPost from "./MainFeaturedPost";
 import FeaturedPost from "./FeaturedPost";
 import Sidebar from "./Sidebar";
-import Footer from "../common/Footer";
-import NavBar from "../common/NavBar";
-
-const sections = [
-  { title: "Technology", url: "#" },
-  { title: "Design", url: "#" },
-  { title: "Culture", url: "#" },
-  { title: "Business", url: "#" },
-  { title: "Politics", url: "#" },
-  { title: "Opinion", url: "#" },
-  { title: "Science", url: "#" },
-  { title: "Health", url: "#" },
-  { title: "Style", url: "#" },
-  { title: "Travel", url: "#" },
-];
 
 const mainFeaturedPost = {
   title: "Title of a longer featured blog post",
@@ -39,6 +23,22 @@ const featuredPosts = [
   {
     title: "Featured post",
     date: "Nov 12",
+    description:
+      "This is a wider card with supporting text below as a natural lead-in to additional content.",
+    image: "https://source.unsplash.com/random",
+    imageLabel: "Image Text",
+  },
+  {
+    title: "Post title",
+    date: "Nov 11",
+    description:
+      "This is a wider card with supporting text below as a natural lead-in to additional content.",
+    image: "https://source.unsplash.com/random",
+    imageLabel: "Image Text",
+  },
+  {
+    title: "Post title",
+    date: "Nov 11",
     description:
       "This is a wider card with supporting text below as a natural lead-in to additional content.",
     image: "https://source.unsplash.com/random",
@@ -84,11 +84,10 @@ export default function Blog() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Container maxWidth="lg">
-        <NavBar sections={sections} />
+      <Container maxWidth="xl" sx={{ mt: 2 }}>
         <main>
           <MainFeaturedPost post={mainFeaturedPost} />
-          <Grid container spacing={4}>
+          <Grid container spacing={2}>
             {featuredPosts.map((post) => (
               <FeaturedPost key={post.title} post={post} />
             ))}
@@ -103,10 +102,6 @@ export default function Blog() {
           </Grid>
         </main>
       </Container>
-      <Footer
-        title="Footer"
-        description="Something here to give the footer a purpose!"
-      />
     </ThemeProvider>
   );
 }
