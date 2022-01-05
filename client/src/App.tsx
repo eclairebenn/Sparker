@@ -1,13 +1,56 @@
-import React from "react";
+import React, { useState, useEffect, FC, ReactElement } from "react";
+import {
+  Container,
+  Typography,
+  Card,
+  CardContent,
+  CardMedia,
+} from "@material-ui/core";
 
-function App() {
+import useStyles from "./styles";
+
+const App: FC<any> = (): ReactElement => {
+  const classes = useStyles();
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    fetch("https://finalspaceapi.com/api/v0/character/?limit=12")
+      .then((res) => res.json())
+      .then((data) => setData(data));
+  }, []);
+
+  interface characterAttr {
+    name: string;
+    species: string;
+    img_url: string;
+    status: string;
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Hi in react client</h1>
-      </header>
+      <Container>
+        <Typography
+          color="textPrimary"
+          gutterBottom
+          variant="h2"
+          align="center"
+        >
+          React MUI Example Start
+          {data.map((character: characterAttr) => (
+            <Card className={classes.card}>
+              <CardMedia className={classes.media} image={character.img_url} />
+              <CardContent>
+                <Typography color="primary" variant="h5">
+                  {character.name}
+                </Typography>
+                <Typography color="textSecondary" variant="subtitle2">
+                  {character.status}
+                </Typography>
+              </CardContent>
+            </Card>
+          ))}
+        </Typography>
+      </Container>
     </div>
   );
-}
+};
 
 export default App;
