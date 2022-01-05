@@ -1,23 +1,23 @@
 //CRUD Functions - Data Access Layer
-import db from "../../models";
+import db from "../models";
 import { Request, Response } from "express";
 
 export const findAll = async (req: Request, res: Response, next: any) => {
   try {
-    const projects = await db.Project.findAll({
+    const users = await db.User.findAll({
       include: {
         model: db.User,
       },
     });
-    return res.status(200).json(projects);
+    return res.status(200).json(users);
   } catch (error) {
     return res.status(500).json(error);
   }
 };
 export const findById = async (req: Request, res: Response, next: any) => {
   try {
-    const project = await db.Project.findByPk(req.params.id);
-    return res.status(200).json(project);
+    const user = await db.User.findByPk(req.params.id);
+    return res.status(200).json(user);
   } catch (error) {
     return res.status(500).json(error);
   }
@@ -26,14 +26,15 @@ export const findById = async (req: Request, res: Response, next: any) => {
 export const create = async (req: Request, res: Response) => {
   try {
     const model = {
-      title: req.body.title,
-      active: req.body.active,
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
     };
 
     try {
-      const project = await db.Project.create(model);
-      console.log("Project Created");
-      return res.status(201).json(project);
+      const user = await db.User.create(model);
+      console.log("user Created");
+      return res.status(201).json(user);
     } catch (error) {
       return res.status(500).json(error);
     }
@@ -46,15 +47,16 @@ export const update = async (req: Request, res: Response) => {
   try {
     const model = {
       id: req.body.id,
-      title: req.body.title,
-      active: req.body.active,
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
     };
 
     try {
-      const project = await db.Project.update(model, {
+      const user = await db.User.update(model, {
         where: { id: req.params.id },
       });
-      return res.status(200).json(project);
+      return res.status(200).json(user);
     } catch (error) {
       return res.status(500).json(error);
     }
@@ -65,8 +67,8 @@ export const update = async (req: Request, res: Response) => {
 
 export const deleteById = async (req: Request, res: Response) => {
   try {
-    const project = await db.Project.destroy({ where: { id: req.params.id } });
-    return res.status(200).json(project);
+    const user = await db.User.destroy({ where: { id: req.params.id } });
+    return res.status(200).json(user);
   } catch (error) {
     return res.status(500).json(error);
   }
